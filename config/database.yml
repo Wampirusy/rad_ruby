@@ -23,6 +23,7 @@ default: &default
 
 development:
   <<: *default
+  host: localhost
   username: postgres
   password: postgres
   database: rad_development
