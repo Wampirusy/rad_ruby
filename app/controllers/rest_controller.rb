@@ -1,14 +1,15 @@
 class RestController < ApplicationController
 
   before_action :prepare_model, only: [:index, :show, :create, :update, :destroy]
+  before_action :set_headers, only: [:index, :show, :create, :update, :destroy]
   before_action :find_record, only: [:show, :update, :destroy]
 
   def index
-   @res = @model_class
+    @res = @model_class
 
-   @res = @res.where(permitted_where)
-   @res = @res.limit(params[:limit].to_i) if params[:limit]
-   @res = @res.offset(params[:offset].to_i) if params[:offset]
+    @res = @res.where(permitted_where)
+    @res = @res.limit(params[:limit].to_i) if params[:limit]
+    @res = @res.offset(params[:offset].to_i) if params[:offset]
 
     render json: @res.all
   end
@@ -36,7 +37,7 @@ class RestController < ApplicationController
   def destroy
     @res.destroy
     raise @res.errors[:base].to_s unless @res.errors[:base].empty?
-    render json: { success: true }, status: 204
+    render json: {success: true}, status: 204
   end
 
   protected
@@ -66,5 +67,12 @@ class RestController < ApplicationController
 
   def find_record
     @res = @model_class.find(params[@model_class.primary_key.to_sym])
+  end
+
+  def set_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   end
 end

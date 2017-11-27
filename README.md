@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Arter clonning the project:
 
-Things you may want to cover:
+* set up your DB connection
 
-* Ruby version
+* run `rake db:migrate` to create tables
 
-* System dependencies
+* run `rake populate_db` to create test data
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* run `rails server` to run application
